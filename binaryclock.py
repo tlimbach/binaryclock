@@ -1,15 +1,6 @@
 import turtle
 import datetime
 
-colorMap = {}
-
-playground = turtle.Screen()
-playground.setup(width=500, height=500, startx=None, starty=None)
-playground.setworldcoordinates(0, 1000, 1000, 0)
-playground.clear()
-playground.bgcolor('black')
-playground.delay(0)
-
 
 def drawBlock(x, y, color):
     flitzi = turtle.RawTurtle(playground)
@@ -72,4 +63,16 @@ def drawDigit(digit, pos):
         colorMap[key] = color
 
 
+colorMap = {}
+
+playground = turtle.Screen()
+playground.setup(width=500, height=500, startx=None, starty=None)
+playground.setworldcoordinates(0, 1000, 1000, 0)
+playground.clear()
+playground.bgcolor('black')
+playground.delay(0)
+
 walk()
+
+playground.exitonclick()
+
