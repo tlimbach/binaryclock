@@ -3,42 +3,31 @@ import datetime
 
 
 def drawBlock(x, y, color):
-    flitzi = turtle.RawTurtle(playground)
+    width = 1000 / 6 - 20
+    height = 1000 / 4 - 20
+    corner = width / 4
     flitzi.penup()
-    flitzi.hideturtle()
-    flitzi.speed(0)
-    flitzi.color(color, color)
-    flitzi.begin_fill()
-    offset = 20
-    flitzi.goto(x, y)
+    flitzi.color(color)
+    flitzi.goto(x + corner, y)
     flitzi.pendown()
-    flitzi.goto(x + (1000 / 6) - offset, y)
-    flitzi.goto(x + (1000 / 6) - offset, y + (1000 / 4) - offset)
-    flitzi.goto(x, y + (1000 / 4) - offset)
-    flitzi.goto(x, y)
+    flitzi.begin_fill()
+    flitzi.goto(x + width - corner, y)
+    flitzi.circle(corner, 90)
+    flitzi.goto(x + width, y + height - corner)
+    flitzi.circle(corner, 90)
+    flitzi.goto(x + corner, y + height)
+    flitzi.circle(corner, 90)
+    flitzi.goto(x, y + corner)
+    flitzi.circle(corner, 90)
     flitzi.end_fill()
 
 
-def walk():
-    now = datetime.datetime.now()
+def drawtime():
+    time = datetime.datetime.now().strftime("%H%M%S")
+    for pos in range(6):
+        drawDigit(time[pos], pos)
 
-    hour = ( "0" + str(now.hour))[-2:]
-    minute = ( "0" + str(now.minute))[-2:]
-    second = ( "0" + str(now.second))[-2:]
-
-    time = hour + minute + second
-
-    drawtime(time)
-
-    playground.ontimer(walk, 900)
-
-
-def drawtime(time):
-    print(time)
-    pos = 0
-    for d in time:
-        pos = pos + 1
-        drawDigit(d, pos)
+    playground.ontimer(drawtime, 200)
 
 
 def drawDigit(digit, pos):
@@ -53,12 +42,12 @@ def drawDigit(digit, pos):
 
         key = str(row) + str(pos)
 
-        old_col = 'white'
+        oldCol = 'white'
         if key in colorMap:
-            old_col = colorMap[key]
+            oldCol = colorMap[key]
 
-        if old_col != color:
-            drawBlock((pos - 1)*(1000 / 6), row*(1000 / 4), color)
+        if (oldCol != color):
+            drawBlock(pos * (1000 / 6), row * (1000 / 4), color)
 
         colorMap[key] = color
 
@@ -72,7 +61,10 @@ playground.clear()
 playground.bgcolor('black')
 playground.delay(0)
 
-walk()
+flitzi = turtle.RawTurtle(playground)
+flitzi.hideturtle()
+flitzi.speed(0)
+
+drawtime()
 
 playground.exitonclick()
-
